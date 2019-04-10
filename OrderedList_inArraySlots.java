@@ -18,7 +18,8 @@ public class OrderedList_inArraySlots
               \findMe is absent from this list.
      */
     public int indexOf( Integer findMe) {
-        return indexOfWhileStyle( findMe);
+        // return indexOfWhileStyle( findMe);
+        return indexOfRecursive( 0, size()-1, findMe);
     }
     
     /** 
@@ -43,6 +44,25 @@ public class OrderedList_inArraySlots
         
         
         return -1;
+    }
+    
+    private int indexOfRecursive( int loLimit, int hiLimit, Integer findMe){
+        int pageToCheck = (loLimit + hiLimit)/2;
+        
+        // if element cannot be found (special case)
+        if (loLimit > hiLimit) return -1;
+        
+        // base case: if name on page IS the name you want
+        if ( list_iAS.get(pageToCheck) == findMe) return pageToCheck;
+        
+        // recursive case(s)
+        else {
+            // if name is smaller, do the search on bottom half
+            if (list_iAS.get(pageToCheck).compareTo(findMe) < 0) 
+                return indexOfRecursive( pageToCheck + 1, hiLimit, findMe);
+            // if name is greater,do the search on top half
+            else return indexOfRecursive( loLimit, pageToCheck - 1, findMe);
+        }
     }
     
 
